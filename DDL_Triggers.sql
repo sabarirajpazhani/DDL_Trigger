@@ -265,3 +265,67 @@ alter role EmployeeAdmin add member Arun;
 
 select * from RoleLog;
 
+
+/*10. Prevent DROP or ALTER on Specific Tables
+Question:
+Create a trigger that prevents the DROP or ALTER operations on critical tables like Users, Orders, or Customers.*/
+create table Users(
+	UserID int identity(1,1) primary key,
+	UserName varchar(80),
+	UserEmail varchar(80),
+	UserPhone varchar(30)
+);
+
+create table Orders(	
+	OrderID int,
+	UserID int,
+	OrderDate datetime,
+	TotalPrice int
+);
+
+create table Customer(
+	CustomerID int,
+	CustomerName varchar(80),
+	CustomerEmail varchar(80)
+);
+
+INSERT INTO Users (UserName, UserEmail, UserPhone)
+VALUES 
+('Raj', 'Raj@example.com', '9876543210'),
+('Arun', 'Arunexample.com', '9123456780'),
+('Anand Kumar', 'anand@example.com', '9871234560'),
+('Priya Devi', 'priya@example.com', '9012345678');
+
+INSERT INTO Orders (OrderID, UserID, OrderDate, TotalPrice)
+VALUES 
+(101, 1, '2025-06-01 10:30:00', 2500),
+(102, 2, '2025-06-02 11:45:00', 1500),
+(103, 3, '2025-06-03 09:15:00', 3200),
+(104, 1, '2025-06-04 13:00:00', 5000);
+
+INSERT INTO Customer (CustomerID, CustomerName, CustomerEmail)
+VALUES 
+(201, 'Karthik Raja', 'karthik@example.com'),
+(202, 'Divya V', 'divya@example.com'),
+(203, 'Vignesh S', 'vignesh@example.com');
+
+
+select * from Users;
+select * from Orders;
+select * from Customer;
+
+create trigger trPreventDropAlter
+on database
+for drop_table, alter_table
+as
+begin
+	declare @EventData xml = eventdata()
+	declare @ObjectName varchar(80) = @EventData.value('(/EVENT_INSTANCE/ObjectName)[1]','varchar(80)')
+	if @ObjectName in ('Users', 'Orders', 'Customer')
+	begin
+		raiserror('Operation not allowed on critical table: %s',16,1,@ObjectName)
+		rollback
+	end
+end
+
+drop table Users ;
