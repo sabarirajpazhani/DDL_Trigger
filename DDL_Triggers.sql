@@ -173,3 +173,24 @@ as
 select * from Employee where EmpSalary > 50000;
 
 select * from View_Changes_log;
+
+
+/*7. Restrict Table Renaming
+Question:
+Implement a trigger that blocks sp_rename if someone tries to rename a table in the database.*/
+create trigger trRename
+on database
+for rename
+as
+begin
+	declare @EventData xml = eventdata()
+	if(@EventData.value('(/EVENT_INSTANCE/ObjectType)[1]','varchar(60)')='TABLE')
+	begin
+		raiserror('Renaming tables is not allowed.', 16, 1)
+		rollback
+	end
+end;
+
+exec sp_rename 'Employees', 'Employee';
+
+select * from Employees;
