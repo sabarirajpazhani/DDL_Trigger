@@ -143,3 +143,33 @@ create index idx_Employee_Name
 on Employee(EmpName);
 
 select * from Index_Log;
+
+/*6. Log All View-Related DDL Events
+Question:
+Write a DDL trigger that fires for any CREATE VIEW, ALTER VIEW, or DROP VIEW statements and inserts details into View_Changes_Log.*/
+create table View_Changes_log(
+	EventType varchar(80),
+	ObjectType varchar(80),
+	EventTime datetime,
+	TriggerBy varchar(40)
+);
+
+create trigger trViewRelated
+on database
+for create_view, alter_view,drop_view
+as
+begin
+	declare @EventData xml = eventdata()
+	insert into View_Changes_log
+	select 
+		@EventData.value('(/EVENT_INSTANCE/EventType)[1]','varchar(80)'),
+		@EventData.value('(/EVENT_INSTANCE/ObjectType)[1]','varchar(80)'),
+		getdate(),
+	    SYSTEM_USER
+end;
+
+CREATE VIEW vwEmployee
+as
+select * from Employee where EmpSalary > 50000;
+
+select * from View_Changes_log;
