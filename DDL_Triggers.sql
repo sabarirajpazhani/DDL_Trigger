@@ -329,3 +329,25 @@ begin
 end
 
 drop table Users ;
+
+
+/*11. Restrict Table Rename to Admin Only
+❌ Goal: Allow only a specific user (like admin) to rename tables.
+Use EVENTDATA() to capture LoginName.
+Rollback if the current login is not admin.*/
+create trigger trRenameTable
+on database
+for rename
+as
+begin
+	declare @EventData xml = eventdata()
+	declare @LoginName varchar(80)= @EventData.value('(/EVENT_INSTANCE/LoginName)[1]','varchar(80)')
+
+	if @LoginName <> 'Admin'
+	begin
+		RAISERROR('Only admin can rename tables.', 16, 1);
+        ROLLBACK TRANSACTION;
+	end
+end;
+
+exec sp_rename 'Users','User';
