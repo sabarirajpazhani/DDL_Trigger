@@ -63,3 +63,25 @@ create table EmpDepartment(
 select * from DDL_Log;
 
 select * from EmpDepartment;
+
+
+/*3. Alert When Schema Changes
+Question:
+Create a DDL trigger that logs whenever a schema is created, altered, or dropped. Include the schema name and the user who made the change.*/
+create trigger trAlertSchema
+on database
+for create_schema, alter_schema, drop_schema
+as
+begin
+	declare @EventData xml = eventdata()
+	insert into DDL_Log
+	select 
+		@EventData.value('(/EVENT_INSTANCE/EventType)[1]','varchar(80)'),
+		@EventData.value('(/EVENT_INSTANCE/ObjectName)[1]','varchar(80)'),
+		GETDATE(),
+		SYSTEM_USER
+end;
+
+create schema Employyes;
+
+select * from DDL_Log;
