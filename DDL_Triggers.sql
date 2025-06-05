@@ -113,3 +113,33 @@ begin
 end
 
 spEmpSalaryUpdate 1, 80000;
+
+
+/*5. Track Index Modifications
+Question:
+Create a trigger that captures CREATE INDEX, DROP INDEX, or ALTER INDEX operations and logs them into an audit table.*/
+create table Index_Log(
+	EventType varchar(80),
+	ObjectType varchar(80),
+	EventTime datetime,
+	TriggerBy varchar(40)
+);
+
+create trigger trIndexModification
+on database
+for create_index, drop_index, alter_index
+as
+begin
+	declare @EventData xml = eventdata()
+	insert into Index_Log
+	select 
+		@EventData.value('(/EVENT_INSTANCE/EventType)[1]','varchar(80)'),
+		@EventData.value('(/EVENT_INSTANCE/ObjectType)[1]','varchar(80)'),
+		getdate(),
+		SYSTEM_USER
+end;
+
+create index idx_Employee_Name
+on Employee(EmpName);
+
+select * from Index_Log;
