@@ -232,3 +232,36 @@ begin
 end;
 
 select * from FuncitonCreationLog;
+
+
+/*9. Audit Role Changes
+Question:
+Write a trigger that logs whenever a database role is created, altered, or dropped.*/
+create table RoleLog(
+	EventType varchar(80),
+	ObjectType varchar(80),
+	EventTime datetime,
+	TriggerBy varchar(40)
+);
+
+create trigger trRoleChanges
+on database
+for create_role, alter_role, drop_role
+as
+begin
+	declare @EventData xml = eventdata()
+	insert into RoleLog
+	select 
+		@EventData.value('(/EVENT_INSTANCE/EventType)[1]','varchar(80)'),
+		@EventData.value('(/EVENT_INSTANCE/ObjectType)[1]','varchar(80)'),
+		getdate(),
+		SYSTEM_USEr
+end;
+
+create role EmployeeAdmin;
+create role Admin1;
+
+alter role EmployeeAdmin add member Arun;
+
+select * from RoleLog;
+
