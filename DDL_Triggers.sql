@@ -17,3 +17,16 @@ insert into Employee values
 
 select * from Employee;
 
+/*1. Prevent Table Dropping
+Question:
+Create a database scoped DDL trigger that prevents anyone from dropping tables in the database.*/
+create trigger trPreventDropping
+on database
+for drop_table
+as
+begin
+	print 'Dropping tables is not allowed'
+	rollback
+end
+
+drop table Employee;
