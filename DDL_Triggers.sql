@@ -85,3 +85,31 @@ end;
 create schema Employyes;
 
 select * from DDL_Log;
+
+
+/*4. Restrict Certain Users from Creating Procedures
+Question:
+Write a DDL trigger that prevents specific users (e.g., 'test_user') from creating stored procedures in the database.*/
+create trigger trRestrictCreateProcedure
+on database
+for create_procedure
+as
+begin
+	if SYSTEM_USER = 'sa'
+	begin
+		 RAISERROR('You are not allowed to create procedures.', 16, 1);
+		 rollback
+	end
+end
+
+create procedure spEmpSalaryUpdate
+	@EmpID int,
+	@EmpSalary int
+as
+begin
+	update Employee
+	set EmpSalary = @EmpSalary
+	where EmpID = @EmpID
+end
+
+spEmpSalaryUpdate 1, 80000;
