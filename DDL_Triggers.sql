@@ -194,3 +194,41 @@ end;
 exec sp_rename 'Employees', 'Employee';
 
 select * from Employees;
+
+/*8. Monitor Function Creation
+Question:
+Create a DDL trigger that logs every CREATE FUNCTION operation, including the function name, user, and timestamp.*/
+create table FuncitonCreationLog(
+	FunctionName varchar(40),
+	EventType varchar(80),
+	ObjectType varchar(80),
+	UserName varchar(80),
+	EventTime datetime
+);
+
+create trigger trFunctionLog
+on database
+for create_function
+as
+begin
+	declare @FunctionName varchar(40)
+	declare @EventData xml = eventdata()
+	insert into FuncitonCreationLog
+	select 
+		@EventData.value('(/EVENT_INSTANCE/ObjectName)[1]','varchar(40)'),
+		@EventData.value('(/EVENT_INSTANCE/EventType)[1]','varchar(80)'),
+		@EventData.value('(/EVENT_INSTANCE/ObjectType)[1]','varchar(80)'),
+		SYSTEM_USER,
+		getdate()
+end;
+
+create function GetParticularEmployeeSalary(@EmpID int)
+returns int
+as
+begin
+	declare @Salary int
+	select @Salary = EmpSalary from Employee where EmpID = @EmpID
+	return @Salary
+end;
+
+select * from FuncitonCreationLog;
