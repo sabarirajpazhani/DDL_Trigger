@@ -30,3 +30,36 @@ begin
 end
 
 drop table Employee;
+
+/*2. Log All Table Creation Events
+Question:
+Write a DDL trigger that captures every CREATE TABLE event in the database and logs it into a table named DDL_Log with details like the user name, event type, and timestamp.*/
+create table DDL_Log(
+	EventType varchar(80),
+	ObjectName varchar(80),
+	EventTime datetime,
+	TriggerBy varchar(80)
+);
+
+create trigger trLogCreation
+on database
+for create_table
+as
+begin
+	declare @EventData xml = eventdata()
+	insert into DDL_Log
+	select 
+		@EventData.value('(/EVENT_INSTANCE/EventType)[1]','varchar(80)'),
+		@EventData.value('(/EVENT_INSTANCE/ObjectName)[1]','varchar(80)'),
+		getdate(),
+		SYSTEM_USER
+end;
+
+create table EmpDepartment(	
+	DepartmentID int primary key,
+	DepartmentName varchar(60)
+);
+
+select * from DDL_Log;
+
+select * from EmpDepartment;
