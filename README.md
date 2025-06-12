@@ -1,6 +1,6 @@
 # DDL Trigger Questions
 
-## 1Prevent Table Dropping
+## 1. Prevent Table Dropping
 
 ## Create a database scoped DDL trigger that prevents anyone from dropping tables in the database
 
