@@ -24,6 +24,14 @@
 
 ## 2. Log All Table Creation Events
 
-## Write a DDL trigger that captures every CREATE TABLE event in the database and logs it into a table named DDL_Log with details like the user name, event type, and timestamp.*/
+## Write a DDL trigger that captures every CREATE TABLE event in the database and logs it into a table named DDL_Log with details like the user name, event type, and timestamp.
 
 ![image](https://github.com/user-attachments/assets/95d7dcc6-786f-4400-be02-67901ae892ad)
+
+## 3. Alert When Schema Changes
+
+## Create a DDL trigger that logs whenever a schema is created, altered, or dropped. Include the schema name and the user who made the change.
+
+s![image](https://github.com/user-attachments/assets/fe5b36e8-29a3-45cc-a48d-605ebfb019fd)
+
+
