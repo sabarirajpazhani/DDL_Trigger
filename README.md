@@ -56,7 +56,8 @@
 
 **Implement a trigger that blocks sp_rename if someone tries to rename a table in the database.**
 
-![Uploading image.png…]()
+![image](https://github.com/user-attachments/assets/9bfcdc1d-1286-4bf0-85f4-a4b5d2eb14ad)
+
 
 
 
