@@ -40,4 +40,11 @@
 
 ![image](https://github.com/user-attachments/assets/9adae405-8f98-4671-9c81-4856fcf691fb)
 
+## 5. Track Index Modifications
+
+**Create a trigger that captures CREATE INDEX, DROP INDEX, or ALTER INDEX operations and logs them into an audit table.**
+
+![image](https://github.com/user-attachments/assets/7c83a4b2-b221-4bb2-8849-2a24523a0418)
+
+
 
