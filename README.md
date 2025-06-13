@@ -58,6 +58,12 @@
 
 ![image](https://github.com/user-attachments/assets/9bfcdc1d-1286-4bf0-85f4-a4b5d2eb14ad)
 
+## 8. Monitor Function Creation
+
+**Create a DDL trigger that logs every CREATE FUNCTION operation, including the function name, user, and timestamp.**
+
+![image](https://github.com/user-attachments/assets/17b2b1e7-37a7-4cb3-a95c-5fca83c776d0)
+
 
 
 
