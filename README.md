@@ -46,5 +46,8 @@
 
 ![image](https://github.com/user-attachments/assets/7c83a4b2-b221-4bb2-8849-2a24523a0418)
 
+## 6. Log All View-Related DDL Events
 
+**Write a DDL trigger that fires for any CREATE VIEW, ALTER VIEW, or DROP VIEW statements and inserts details into View_Changes_Log.**
 
+![image](https://github.com/user-attachments/assets/32805d8f-efc2-48f1-8473-8d35688e267f)
