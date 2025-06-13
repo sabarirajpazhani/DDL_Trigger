@@ -51,3 +51,12 @@
 **Write a DDL trigger that fires for any CREATE VIEW, ALTER VIEW, or DROP VIEW statements and inserts details into View_Changes_Log.**
 
 ![image](https://github.com/user-attachments/assets/32805d8f-efc2-48f1-8473-8d35688e267f)
+
+## 7. Restrict Table Renaming
+
+**Implement a trigger that blocks sp_rename if someone tries to rename a table in the database.**
+
+![Uploading image.png…]()
+
+
+
