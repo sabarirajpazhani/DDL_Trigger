@@ -32,6 +32,7 @@
 
 ## Create a DDL trigger that logs whenever a schema is created, altered, or dropped. Include the schema name and the user who made the change.
 
-s![image](https://github.com/user-attachments/assets/fe5b36e8-29a3-45cc-a48d-605ebfb019fd)
+![image](https://github.com/user-attachments/assets/b8905bc4-c0ee-4a27-bc07-7ad22af91ad6)
+
 
 
