@@ -34,5 +34,10 @@
 
 ![image](https://github.com/user-attachments/assets/b8905bc4-c0ee-4a27-bc07-7ad22af91ad6)
 
+## 4. Restrict Certain Users from Creating Procedures
+
+**Write a DDL trigger that prevents specific users (e.g., 'test_user') from creating stored procedures in the database.**
+
+![image](https://github.com/user-attachments/assets/9adae405-8f98-4671-9c81-4856fcf691fb)
 
 
